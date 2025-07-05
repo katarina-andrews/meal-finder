@@ -6,5 +6,7 @@ This app will have an x number of search parameters in order to find a recipes.
 
 - [GitHub Page link](https://katarina-andrews.github.io/meal-finder/)
 
+- [Project Board](https://github.com/users/katarina-andrews/projects/1)
+
 ## Postman
 ![postman screenshot](Postman.png)
