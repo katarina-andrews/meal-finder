@@ -9,21 +9,30 @@
   <body>
     <header>
       <h1>Meal Finder</h1>
+      <p>Insert some catchy description/tagline here</p>
     </header>
     <main>
       <section>
         <form>
-          <input type="text" name="" id="" />
-          <input type="text" name="" id="" />
-          <select name="" id=""></select>
-          <select name="" id=""></select>
-          <button type="submit"></button>
+          <label for="search-meal">Search by Meal</label>
+          <input type="text" name="search-meal" id="search-meal" />
+
+          <label for="search-ingredient">Search by Ingredient</label>
+          <input type="text" name="search-ingredient" id="search-ingredient" />
+
+          <select name="select-category" id="select-category">
+            <option value="" disabled selected hidden>Choose a Category</option>
+          </select>
+          <select name="select-area" id="select-area">
+            <option value="" disabled selected hidden>Choose an Area</option>
+          </select>
+          <button type="submit">Search</button>
         </form>
       </section>
       <section>
-        <h2></h2>
-        <p></p>
-        <button type="submit"></button>
+        <h2>Feeling Adventurous?</h2>
+        <p>Click here for a random meal.</p>
+        <button type="submit">Random Meal!</button>
       </section>
     </main>
     <footer></footer>
