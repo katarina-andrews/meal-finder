@@ -1,6 +1,6 @@
 # meal-finder app
 
-This app will have an x number of search parameters in order to find a recipes.
+This app will have a button to generate a random meal and (maybe) an x number of search parameters in order to find meals as well.
 
 - [The Meal DB API](https://www.themealdb.com/api.php)
 
