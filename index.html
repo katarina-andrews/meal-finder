@@ -7,30 +7,29 @@
     <title>Meal Finder App</title>
   </head>
   <body>
-    <header>
-      <h1>Meal Finder</h1>
-      <p>Insert some catchy description/tagline here</p>
+    <header class="text-center m-5">
+      <h1 class="text-5xl py-2">Meal Finder</h1>
+      <p class="">Insert some catchy description/tagline here</p>
     </header>
-    <main>
+    <main class="w-[90vw] mx-auto">
       <section>
-        <form>
+        <form  class = "flex flex-col gap-2">
           <label for="search-meal">Search by Meal</label>
-          <input type="text" name="search-meal" id="search-meal" />
+          <input type="text" name="search-meal" id="search-meal" class="border-2 border-amber-500 p-2 bg-amber-50 active:bg-amber-50 text-amber-600" />
 
           <label for="search-ingredient">Search by Ingredient</label>
-          <input type="text" name="search-ingredient" id="search-ingredient" />
+          <input type="text" name="search-ingredient" id="search-ingredient" class="border-2 border-amber-500 p-2 bg-amber-50 active:bg-amber-50 text-amber-600"/>
 
          
-          <button type="submit" id="recipe-search-btn">Search</button>
+          <button type="submit" id="recipe-search-btn" class="p-2 text-white bg-amber-500 hover:cursor-pointer hover:bg-amber-400 ">Search</button>
         </form>
       </section>
-      <section>
+      <section class="border border-amber-500 text-center my-3 p-3">
         <h2>Feeling Adventurous?</h2>
         <p>Click here for a random meal.</p>
-        <button type="submit" id="random-btn">Random Meal!</button>
+        <button type="submit" id="random-btn" class="p-2 text-white bg-amber-500 hover:cursor-pointer hover:bg-amber-400 my-2">Random Meal!</button>
       </section>
-      <section>
-        <div id="recipe-container"></div>
+      <section id="recipe-container" class="border border-amber-500">
       </section>
     </main>
     <footer></footer>

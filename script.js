@@ -1,5 +1,7 @@
 const recipeContainer = document.getElementById("recipe-container");
 const randomBtn = document.getElementById("random-btn");
+
+// implement the two search input. add async functions
 // const recipeSearchBtn = document.getElementById("recipe-search-btn");
 
 async function fetchRandom() {
@@ -19,18 +21,20 @@ async function fetchRandom() {
   }
 }
 
-// data.meals 
+//need to add data.meals somewhere. probably in the event listener
+
 
 function renderRandomMeal(mealData) {
   recipeContainer.innerHTML = "";
 
+  //not working probably because of data.meals missing 
   mealData.forEach((meal) => {
     const mealElm = document.createElement("div");
     mealElm.className = "";
 
     const nameElm = document.createElement("h1");
     nameElm.innerHTML = meal.strMeal;
-    nameElm.className = "";
+    nameElm.className = "text-2xl font-bold";
 
     const categoryElm = document.createElement("p");
     categoryElm.innerHTML = `Category: ${meal.strCategory}`;
@@ -40,6 +44,7 @@ function renderRandomMeal(mealData) {
     areaElm.innerHTML = `Origin: ${meal.strArea}`;
     areaElm.className = "";
 
+    //change this so each sentence is a li to make it easier to read
     const instructionElm = document.createElement("p");
     instructionElm.innerHTML = `Instructions: ${meal.strInstructions}`;
     instructionElm.className = "";
