@@ -1,12 +1,14 @@
 const recipeContainer = document.getElementById("recipe-container");
 const randomBtn = document.getElementById("random-btn");
 
-// implement the two search input. add async functions
+// add this to it maybe and maybe drop menu otherwise add a favorite button
 // const recipeSearchBtn = document.getElementById("recipe-search-btn");
 
 async function fetchRandom() {
   try {
-    const response = await fetch("https://www.themealdb.com/api/json/v1/1/random.php");
+    const response = await fetch(
+      "https://www.themealdb.com/api/json/v1/1/random.php"
+    );
     if (!response.ok) {
       throw new Error("Network error. Status: ", response.status);
     }
@@ -21,67 +23,77 @@ async function fetchRandom() {
   }
 }
 
-//need to add data.meals somewhere. probably in the event listener
-
-
 function renderRandomMeal(mealData) {
   recipeContainer.innerHTML = "";
 
-  //not working probably because of data.meals missing 
-  mealData.forEach((meal) => {
+  mealData.forEach((meals) => {
     const mealElm = document.createElement("div");
-    mealElm.className = "";
+    mealElm.className = "text-center";
 
     const nameElm = document.createElement("h1");
-    nameElm.innerHTML = meal.strMeal;
-    nameElm.className = "text-2xl font-bold";
+    nameElm.innerHTML = meals.strMeal;
+    nameElm.className = "text-2xl font-bold pt-2";
 
     const categoryElm = document.createElement("p");
-    categoryElm.innerHTML = `Category: ${meal.strCategory}`;
-    categoryElm.className = "";
+    categoryElm.innerHTML = `<strong>Category:</strong> ${meals.strCategory}`;
 
     const areaElm = document.createElement("p");
-    areaElm.innerHTML = `Origin: ${meal.strArea}`;
-    areaElm.className = "";
+    areaElm.innerHTML = `<strong>Origin:</strong> ${meals.strArea}`;
 
     //change this so each sentence is a li to make it easier to read
-    const instructionElm = document.createElement("p");
-    instructionElm.innerHTML = `Instructions: ${meal.strInstructions}`;
-    instructionElm.className = "";
+    const instructionsTitle = document.createElement("h2");
+    instructionsTitle.innerHTML = `<strong>Instructions</strong>`;
+    instructionsTitle.className = "text-lg";
+    const instructionsListElm = document.createElement("ul");
+    const instructions = meals.strInstructions.split(/(?<=\.)\s+/); //each sentence after the period is a new line
+
+    for (let i = 0; i < instructions.length; i++) {
+      const list = document.createElement("li");
+      list.innerHTML = instructions[i];
+      instructionsListElm.appendChild(list);
+    }
 
     const imgElm = document.createElement("img");
-    imgElm.src = meal.strMealThumb;
-    imgElm.alt = meal.strMeal;
-    imgElm.className = "";
+    imgElm.src = meals.strMealThumb;
+    imgElm.alt = meals.strMeal;
+    imgElm.className = "p-2 mx-auto";
+    // max-width-[300px]
 
     const tagsElm = document.createElement("p");
-    tagsElm.innerHTML = `Tags: ${meal.strTags}`;
-    tagsElm.className = "";
+    tagsElm.innerHTML = meals.strTags
+      ? `<strong>Tags:</strong> ${meals.strTags.replace(/,/g, ", ")}` //adds space after each comma
+      : "";
 
     const videoLinkElm = document.createElement("a");
-    videoLinkElm.href = meal.strYoutube;
+    videoLinkElm.href = meals.strYoutube;
     videoLinkElm.innerHTML = "Recipe Video";
     videoLinkElm.target = "_blank";
-    videoLinkElm.className = "";
+    videoLinkElm.className =
+      "p-1 text-white bg-amber-500 hover:cursor-pointer hover:bg-amber-400 font-bold text-lg";
 
+    //ingredients and measurements both have 20 total and every recipe has a different amount
+    const ingredientListELm = document.createElement("h2");
+    ingredientListELm.innerHTML = `<strong>Ingredients</strong>`;
+    ingredientListELm.className = "text-xl";
+    const ingredientAndMeasureListElm = document.createElement("ul");
+    for (let i = 1; i <= 20; i++) {
+      const ingredient = meals[`strIngredient${i}`];
+      const measure = meals[`strMeasure${i}`];
 
-
-    // // change these to for loops 1 - 20 for both 
-    //  const ingrAndMeasListElm = document.createElement("ul");
-    //  for (let i = 1; i <= 20; i++) {
-
-    //  }
-    // // ingredientElm.innerHTML = meal.strIngredient;
-    // // ingrAndMeasListElm.className = "";
-
-    // // const measureElm = document.createElement("p");
-    // meal.strMeasure;
-  
+      if (ingredient) {
+        const list = document.createElement("li");
+        list.innerHTML = `${ingredient} - <i>${measure}</i>`;
+        ingredientAndMeasureListElm.appendChild(list);
+      }
+    }
+    ingredientAndMeasureListElm.className = "list-disc list-inside";
 
     mealElm.appendChild(nameElm);
     mealElm.appendChild(imgElm);
-    // mealElm.appendChild(ingrAndMeasListElm);
-    mealElm.appendChild(instructionElm);
+    mealElm.appendChild(ingredientListELm);
+    mealElm.appendChild(ingredientAndMeasureListElm);
+    mealElm.appendChild(instructionsTitle);
+    mealElm.appendChild(instructionsListElm);
     mealElm.appendChild(categoryElm);
     mealElm.appendChild(areaElm);
     mealElm.appendChild(tagsElm);
@@ -91,6 +103,7 @@ function renderRandomMeal(mealData) {
   });
 }
 
-randomBtn.addEventListener("click", renderRandomMeal);
-
-
+randomBtn.addEventListener("click", async () => {
+  const data = await fetchRandom();
+  renderRandomMeal(data.meals);
+});
