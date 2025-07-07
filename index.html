@@ -13,24 +13,55 @@
     </header>
     <main class="w-[90vw] mx-auto">
       <section>
-        <form  class = "flex flex-col gap-2">
-          <label for="search-meal">Search by Meal</label>
-          <input type="text" name="search-meal" id="search-meal" class="border-2 border-amber-500 p-2 bg-amber-50 active:bg-amber-50 text-amber-600" />
+        <form class="flex flex-col gap-2">
+          <select name="select-category" id="select-category">
+            <option value="" disabled selected hidden>Choose a Category</option>
+            <option value="beef">Beef</option>
+            <option value="chicken">Chicken</option>
+            <option value="dessert">Dessert</option>
+            <option value="lamb">Lamb</option>
+            <option value="miscellaneous">Miscellaneous</option>
+            <option value="pasta">Pasta</option>
+            <option value="pork">Pork</option>
+            <option value="seafood">Seafood</option>
+            <option value="side">Side</option>
+            <option value="starter">Starter</option>
+            <option value="vegan">Vegan</option>
+            <option value="vegetarian">Vegetarian</option>
+            <option value="breakfast">Breakfast</option>
+            <option value="goat">Goat</option>
+            <option value="none">None</option>
+          </select>
 
           <label for="search-ingredient">Search by Ingredient</label>
-          <input type="text" name="search-ingredient" id="search-ingredient" class="border-2 border-amber-500 p-2 bg-amber-50 active:bg-amber-50 text-amber-600"/>
+          <input
+            type="text"
+            name="search-ingredient"
+            id="search-ingredient"
+            class="border-2 border-amber-500 p-2 bg-amber-50 active:bg-amber-50 text-amber-600"
+          />
 
-         
-          <button type="submit" id="recipe-search-btn" class="p-2 text-white bg-amber-500 hover:cursor-pointer hover:bg-amber-400 ">Search</button>
+          <button
+            type="submit"
+            id="recipe-search-btn"
+            class="p-2 text-white bg-amber-500 hover:cursor-pointer hover:bg-amber-400"
+          >
+            Search
+          </button>
         </form>
       </section>
       <section class="border border-amber-500 text-center my-3 p-3">
         <h2>Feeling Adventurous?</h2>
         <p>Click here for a random meal.</p>
-        <button type="submit" id="random-btn" class="p-2 text-white bg-amber-500 hover:cursor-pointer hover:bg-amber-400 my-2">Random Meal!</button>
+        <button
+          type="submit"
+          id="random-btn"
+          class="p-2 text-white bg-amber-500 hover:cursor-pointer hover:bg-amber-400 my-2"
+        >
+          Random Meal!
+        </button>
       </section>
-      <section id="recipe-container" class="border border-amber-500">
-      </section>
+      <section id="recipe-container" class="border border-amber-500"></section>
     </main>
     <footer></footer>
 
