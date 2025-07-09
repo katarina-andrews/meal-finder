@@ -72,12 +72,12 @@ function renderMealDetails(meals) {
     const imgElm = document.createElement("img");
     imgElm.src = meals.strMealThumb;
     imgElm.alt = meals.strMeal;
-    imgElm.className = "p-2 mx-auto";
+    imgElm.className = "p-2 mx-auto max-w-[300px]";
 
     const tagsElm = document.createElement("p");
     tagsElm.innerHTML = meals.strTags
-      ? `<strong>Tags:</strong> ${meals.strTags.replace(/,/g, ", ")}` //adds space after each comma
-      : "";
+      ? `<strong>Tags:</strong> ${meals.strTags.replace(/,/g, ", ")}`
+      : ""; //adds space after each comma and shows nothing if tag is null
 
     const videoLinkElm = document.createElement("a");
     videoLinkElm.href = meals.strYoutube;
@@ -100,7 +100,8 @@ function renderMealDetails(meals) {
         list.innerHTML = `${ingredient} - <i>${measure}</i>`;
         ingredientAndMeasureListElm.appendChild(list);
       }
-    }
+    } // so measurement is next to the corresponding ingredient
+
     ingredientAndMeasureListElm.className = "list-disc list-inside";
 
     mealElm.appendChild(nameElm);

@@ -9,6 +9,10 @@
   <body>
     <header class="text-center m-5">
       <h1 class="text-5xl py-2">Meal Finder</h1>
+      <p>
+        Do you know the full name of the recipe you want? Maybe you only
+        remember one word or one letter. Look no further! This app is for you.
+      </p>
     </header>
     <main class="w-[90vw] mx-auto">
       <section>
@@ -18,7 +22,8 @@
             type="text"
             name="search-name"
             id="search-name"
-            class="border-2 border-amber-500 p-2 bg-amber-50 active:bg-amber-50 text-amber-600"
+            class="border-2 border-amber-500 p-2 bg-amber-50 active:bg-amber-50"
+            placeholder="e.g. chicken alfredo, grilled, egg, g, oo, etc."
           />
 
           <button
@@ -28,7 +33,6 @@
           >
             Search
           </button>
-
         </form>
       </section>
       <section class="border border-amber-500 text-center my-3 p-3">
@@ -39,10 +43,10 @@
           id="random-btn"
           class="p-2 text-white bg-amber-500 hover:cursor-pointer hover:bg-amber-400 my-2"
         >
-          Random Meal!
+          Random Meal
         </button>
       </section>
-      <section id="recipe-container" class="border border-amber-500"></section>
+      <section id="recipe-container" class=""></section>
     </main>
     <footer></footer>
 
