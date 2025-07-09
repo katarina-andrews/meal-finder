@@ -1,7 +1,6 @@
 const recipeContainer = document.getElementById("recipe-container");
 const randomBtn = document.getElementById("random-btn");
 const nameSearchBtn = document.getElementById("name-search-btn");
-const ingredientSearchBtn = document.getElementById("ingredient-search-btn");
 
 async function fetchRandom() {
   try {
@@ -19,25 +18,6 @@ async function fetchRandom() {
     console.log("ERROR fetching random recipe: ", error.message);
   } finally {
     console.log("Finished fetching random recipe");
-  }
-}
-
-async function fetchIngredient(ingredient) {
-  try {
-    const response = await fetch(
-      `https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredient}`
-    );
-    if (!response.ok) {
-      throw new Error("Network error. Status: ", response.status);
-    }
-
-    const data = await response.json();
-    console.log(data);
-    return data;
-  } catch (error) {
-    console.log("ERROR fetching by ingredient: ", error.message);
-  } finally {
-    console.log("Finished fetching by ingredient");
   }
 }
 
@@ -93,7 +73,6 @@ function renderMealDetails(meals) {
     imgElm.src = meals.strMealThumb;
     imgElm.alt = meals.strMeal;
     imgElm.className = "p-2 mx-auto";
-    // max-width-[300px]
 
     const tagsElm = document.createElement("p");
     tagsElm.innerHTML = meals.strTags
@@ -156,17 +135,3 @@ nameSearchBtn.addEventListener("click", async (event) => {
     return;
   }
 });
-
-// showing up in console but stopping in debugger and not showing in dom
-// ingredientSearchBtn.addEventListener("click", async (event) => {
-//   event.preventDefault();
-//   console.log("button clicked");
-//   const userInput = document.getElementById("search-ingredient").value;
-//   const data = await fetchIngredient(userInput);
-//   renderMealDetails(data.meals);
-//   if (!userInput || userInput === null ) {
-//     recipeContainer.innerHTML = "Please enter a valid ingredient.";
-//     return;
-//   }
-//    console.log(data);
-// });
