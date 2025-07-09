@@ -1,8 +1,17 @@
+const state = {
+  currentPage: 1,
+  currentIngredient: "",
+  currentName: "",
+  isRateLimit: false,
+};
+
+// const mealsPerPage = 3;
+
+
 const recipeContainer = document.getElementById("recipe-container");
 const randomBtn = document.getElementById("random-btn");
-
-// add this to it maybe and maybe drop menu otherwise add a favorite button
-// const recipeSearchBtn = document.getElementById("recipe-search-btn");
+const nameSearchBtn = document.getElementById("search-name");
+const ingredientSearchBtn = document.getElementById("ingredient-search-btn");
 
 async function fetchRandom() {
   try {
@@ -23,12 +32,56 @@ async function fetchRandom() {
   }
 }
 
-function renderRandomMeal(mealData) {
+async function fetchIngredient(ingredient) {
+  state.currentIngredient = ingredient;
+  state.isRateLimit = true;
+
+  try {
+    const response = await fetch(
+      `https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredient}`
+    );
+    if (!response.ok) {
+      throw new Error("Network error. Status: ", response.status);
+    }
+
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.log("ERROR fetching by ingredient: ", error.message);
+  } finally {
+    console.log("Finished fetching by ingredient");
+  }
+}
+
+async function fetchName(name) {
+  state.currentName = name;
+  state.isRateLimit = true;
+
+  try {
+    const response = await fetch(
+      `https://www.themealdb.com/api/json/v1/1/search.php?s=${name}`
+    );
+    if (!response.ok) {
+      throw new Error("Network error. Status: ", response.status);
+    }
+
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.log("ERROR fetching by name: ", error.message);
+  } finally {
+    console.log("Finished fetching by name");
+  }
+}
+
+function renderMealDetails(mealData) {
   recipeContainer.innerHTML = "";
 
   mealData.forEach((meals) => {
     const mealElm = document.createElement("div");
-    mealElm.className = "text-center";
+    mealElm.className = "text-center p-3";
 
     const nameElm = document.createElement("h1");
     nameElm.innerHTML = meals.strMeal;
@@ -103,7 +156,81 @@ function renderRandomMeal(mealData) {
   });
 }
 
+// function handleIngredientSearch(event) {
+//   event.preventDefault();
+//   recipeContainer.innerHTML = "";
+//   const ingredient = event.target["search-ingredient"].value;
+
+//   if (!ingredient) {
+//      recipeContainer.innerHTML = "Please enter a valid ingredient."
+//      return;
+//   }
+
+
+
+
+// }
+
+
+
+// function handleNameSearch(event) {
+//    event.preventDefault();
+//   recipeContainer.innerHTML = "";
+//   const name = event.target["search-name"].value;
+
+//   if (!name) {
+//      recipeContainer.innerHTML = "Please enter a valid name."
+//      return;
+//   }
+
+
+
+// }
+
+
+
+//  function renderPagination() {
+// // const paginationContainer = document.getElementById("pagination-section")
+// //  paginationContainer.innerHTML = "";
+// //   const prevBtn = document.getElementById("previous");
+// //   const nextBtn = document.getElementById("next");
+
+// //   prevBtn.disabled = ;
+// //   nextBtn.disabled = ;
+
+// //   prevBtn.onclick = async () => { 
+// //     if (state.isRateLimit) {
+// //       alert("Rate limit exceeded. Please wait.");
+// //       return;
+// //     }
+
+
+
+// //   }
+
+// //   nextBtn.onclick = async () => {
+// //     if (state.isRateLimit) {
+// //       alert("Rate limit exceeded. Please wait.");
+// //       return;
+// //     }
+
+
+
+// //   }
+
+
+// //   const pageCountElem = document.createElement("p");
+// //   pageCountElem.innerHTML = `Page ${state.currentPage} of ${}`;
+// //   pageCountElem.className = "text-center font-bold text-amber-500";
+// //   paginationContainer.appendChild(pageCountElem);
+// }
+
+
+
 randomBtn.addEventListener("click", async () => {
   const data = await fetchRandom();
-  renderRandomMeal(data.meals);
+  renderMealDetails(data.meals);
 });
+
+// nameSearchBtn.addEventListener("click", )
+// ingredientSearchBtn.addEventListener("click", )
