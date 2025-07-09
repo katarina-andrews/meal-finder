@@ -1,3 +1,10 @@
+const state = {
+  currentPage: 1,
+  currentName: "",
+  mealsPerPage: 3,
+  currentMeals: [],
+};
+
 const recipeContainer = document.getElementById("recipe-container");
 const randomBtn = document.getElementById("random-btn");
 const nameSearchBtn = document.getElementById("name-search-btn");
@@ -40,9 +47,18 @@ async function fetchName(name) {
   }
 }
 
-function renderMealDetails(meals) {
+function renderMealDetails(mealsData) {
   recipeContainer.innerHTML = "";
-  meals.forEach((meals) => {
+
+  // if (state.currentMeals === 0) {
+  //   const noDataElm = document.createElement("p");
+  //   noDataElm.innerText = "No meals found.";
+  //   // noDataElm.className = "font-bold";
+  //   recipeContainer.appendChild(noDataElm);
+  //   return;
+  // }
+
+  mealsData.forEach((meals) => {
     const mealElm = document.createElement("div");
     mealElm.className = "text-center p-3";
 
@@ -119,9 +135,60 @@ function renderMealDetails(meals) {
   });
 }
 
+const pagination = () => {
+  const paginationContainer = document.getElementById("pagination-section");
+  paginationContainer.innerHTML = "";
+  const btnContainer = document.getElementById("pagination-buttons");
+  btnContainer.innerHTML = "";
+  const prevBtn = document.createElement("button");
+  prevBtn.innerHTML = "Previous";
+  prevBtn.className =
+    "p-1 text-white bg-amber-500 hover:cursor-pointer hover:bg-amber-400";
+  const nextBtn = document.createElement("button");
+  nextBtn.innerHTML = "Next";
+  nextBtn.className =
+    "p-1 text-white bg-amber-500 hover:cursor-pointer hover:bg-amber-400";
+
+  const startingIndex = (state.currentPage - 1) * state.mealsPerPage;
+  const endingIndex = state.currentPage * state.mealsPerPage;
+  const showMeals = state.currentMeals.slice(startingIndex, endingIndex);
+
+  renderMealDetails(showMeals);
+
+  prevBtn.disabled = state.currentPage === 1;
+  nextBtn.disabled = endingIndex > state.currentMeals.length;
+
+  nextBtn.onclick = async () => {
+    if (endingIndex < state.currentMeals.length) {
+      state.currentPage++;
+      pagination();
+    }
+  };
+
+  prevBtn.onclick = async () => {
+    if (state.currentPage > 1) {
+      state.currentPage--;
+      pagination();
+    }
+  };
+
+  const totalPages = Math.ceil(state.currentMeals.length / state.mealsPerPage);
+  const pageCountElem = document.createElement("p");
+  pageCountElem.innerHTML = `Page ${state.currentPage} of ${totalPages}`;
+  pageCountElem.className = "text-center font-bold pt-2";
+  paginationContainer.appendChild(pageCountElem);
+
+  btnContainer.appendChild(prevBtn);
+  btnContainer.appendChild(nextBtn);
+};
+
 randomBtn.addEventListener("click", async () => {
   const data = await fetchRandom();
   renderMealDetails(data.meals);
+
+  state.currentMeals = data.meals;
+  state.currentPage = 1;
+  pagination();
 });
 
 nameSearchBtn.addEventListener("click", async (event) => {
@@ -130,9 +197,15 @@ nameSearchBtn.addEventListener("click", async (event) => {
   const userInput = document.getElementById("search-name").value;
   const data = await fetchName(userInput);
   renderMealDetails(data.meals);
-  //figure out how to display error message if input is not an actual name
-  if (!userInput || userInput === null || userInput === undefined) {
+
+  //figure out how to display error message if input is not an actual name "TypeError: Cannot read properties of null (reading 'forEach')"
+  if (!userInput)  {
     recipeContainer.innerHTML = "Please enter a valid name.";
     return;
   }
+
+  state.currentName = userInput;
+  state.currentMeals = data.meals;
+  state.currentPage = 1;
+  pagination();
 });
