@@ -1,16 +1,6 @@
-const state = {
-  currentPage: 1,
-  currentIngredient: "",
-  currentName: "",
-  isRateLimit: false,
-};
-
-// const mealsPerPage = 3;
-
-
 const recipeContainer = document.getElementById("recipe-container");
 const randomBtn = document.getElementById("random-btn");
-const nameSearchBtn = document.getElementById("search-name");
+const nameSearchBtn = document.getElementById("name-search-btn");
 const ingredientSearchBtn = document.getElementById("ingredient-search-btn");
 
 async function fetchRandom() {
@@ -33,9 +23,6 @@ async function fetchRandom() {
 }
 
 async function fetchIngredient(ingredient) {
-  state.currentIngredient = ingredient;
-  state.isRateLimit = true;
-
   try {
     const response = await fetch(
       `https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredient}`
@@ -55,9 +42,6 @@ async function fetchIngredient(ingredient) {
 }
 
 async function fetchName(name) {
-  state.currentName = name;
-  state.isRateLimit = true;
-
   try {
     const response = await fetch(
       `https://www.themealdb.com/api/json/v1/1/search.php?s=${name}`
@@ -76,10 +60,9 @@ async function fetchName(name) {
   }
 }
 
-function renderMealDetails(mealData) {
+function renderMealDetails(meals) {
   recipeContainer.innerHTML = "";
-
-  mealData.forEach((meals) => {
+  meals.forEach((meals) => {
     const mealElm = document.createElement("div");
     mealElm.className = "text-center p-3";
 
@@ -156,81 +139,34 @@ function renderMealDetails(mealData) {
   });
 }
 
-// function handleIngredientSearch(event) {
-//   event.preventDefault();
-//   recipeContainer.innerHTML = "";
-//   const ingredient = event.target["search-ingredient"].value;
-
-//   if (!ingredient) {
-//      recipeContainer.innerHTML = "Please enter a valid ingredient."
-//      return;
-//   }
-
-
-
-
-// }
-
-
-
-// function handleNameSearch(event) {
-//    event.preventDefault();
-//   recipeContainer.innerHTML = "";
-//   const name = event.target["search-name"].value;
-
-//   if (!name) {
-//      recipeContainer.innerHTML = "Please enter a valid name."
-//      return;
-//   }
-
-
-
-// }
-
-
-
-//  function renderPagination() {
-// // const paginationContainer = document.getElementById("pagination-section")
-// //  paginationContainer.innerHTML = "";
-// //   const prevBtn = document.getElementById("previous");
-// //   const nextBtn = document.getElementById("next");
-
-// //   prevBtn.disabled = ;
-// //   nextBtn.disabled = ;
-
-// //   prevBtn.onclick = async () => { 
-// //     if (state.isRateLimit) {
-// //       alert("Rate limit exceeded. Please wait.");
-// //       return;
-// //     }
-
-
-
-// //   }
-
-// //   nextBtn.onclick = async () => {
-// //     if (state.isRateLimit) {
-// //       alert("Rate limit exceeded. Please wait.");
-// //       return;
-// //     }
-
-
-
-// //   }
-
-
-// //   const pageCountElem = document.createElement("p");
-// //   pageCountElem.innerHTML = `Page ${state.currentPage} of ${}`;
-// //   pageCountElem.className = "text-center font-bold text-amber-500";
-// //   paginationContainer.appendChild(pageCountElem);
-// }
-
-
-
 randomBtn.addEventListener("click", async () => {
   const data = await fetchRandom();
   renderMealDetails(data.meals);
 });
 
-// nameSearchBtn.addEventListener("click", )
-// ingredientSearchBtn.addEventListener("click", )
+nameSearchBtn.addEventListener("click", async (event) => {
+  event.preventDefault();
+  console.log("button clicked");
+  const userInput = document.getElementById("search-name").value;
+  const data = await fetchName(userInput);
+  renderMealDetails(data.meals);
+  //figure out how to display error message if input is not an actual name
+  if (!userInput || userInput === null || userInput === undefined) {
+    recipeContainer.innerHTML = "Please enter a valid name.";
+    return;
+  }
+});
+
+// showing up in console but stopping in debugger and not showing in dom
+// ingredientSearchBtn.addEventListener("click", async (event) => {
+//   event.preventDefault();
+//   console.log("button clicked");
+//   const userInput = document.getElementById("search-ingredient").value;
+//   const data = await fetchIngredient(userInput);
+//   renderMealDetails(data.meals);
+//   if (!userInput || userInput === null ) {
+//     recipeContainer.innerHTML = "Please enter a valid ingredient.";
+//     return;
+//   }
+//    console.log(data);
+// });
