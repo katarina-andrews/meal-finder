@@ -9,29 +9,26 @@
   <body>
     <header class="text-center m-5">
       <h1 class="text-5xl py-2">Meal Finder</h1>
-      <p class="">Insert some catchy description/tagline here</p>
+      <p class="">Want to use up your milk before it goes bad? What about the kale withering away in the back of your fridge? Maybe you have particular meal in mind. Look no further! </p>
     </header>
     <main class="w-[90vw] mx-auto">
       <section>
         <form class="flex flex-col gap-2">
-          <select name="select-category" id="select-category">
-            <option value="" disabled selected hidden>Choose a Category</option>
-            <option value="beef">Beef</option>
-            <option value="chicken">Chicken</option>
-            <option value="dessert">Dessert</option>
-            <option value="lamb">Lamb</option>
-            <option value="miscellaneous">Miscellaneous</option>
-            <option value="pasta">Pasta</option>
-            <option value="pork">Pork</option>
-            <option value="seafood">Seafood</option>
-            <option value="side">Side</option>
-            <option value="starter">Starter</option>
-            <option value="vegan">Vegan</option>
-            <option value="vegetarian">Vegetarian</option>
-            <option value="breakfast">Breakfast</option>
-            <option value="goat">Goat</option>
-            <option value="none">None</option>
-          </select>
+          <label for="search-name">Search by Name</label>
+          <input
+            type="text"
+            name="search-name"
+            id="search-name"
+            class="border-2 border-amber-500 p-2 bg-amber-50 active:bg-amber-50 text-amber-600"
+          />
+
+          <button
+            type="submit"
+            id="name-search-btn"
+            class="p-2 text-white bg-amber-500 hover:cursor-pointer hover:bg-amber-400"
+          >
+            Search
+          </button>
 
           <label for="search-ingredient">Search by Ingredient</label>
           <input
@@ -43,7 +40,7 @@
 
           <button
             type="submit"
-            id="recipe-search-btn"
+            id="ingredient-search-btn"
             class="p-2 text-white bg-amber-500 hover:cursor-pointer hover:bg-amber-400"
           >
             Search
@@ -62,6 +59,12 @@
         </button>
       </section>
       <section id="recipe-container" class="border border-amber-500"></section>
+      <section id="pagination-section">
+      </section>
+      <section class="flex justify-between my-2 w-full align-middle">
+    <button id="previous" class="p-1 text-white bg-amber-500 hover:cursor-pointer hover:bg-amber-400">Previous</button>
+      <button id="next" class="p-1 text-white bg-amber-500 hover:cursor-pointer hover:bg-amber-400">Next</button>
+      </section>
     </main>
     <footer></footer>
 
