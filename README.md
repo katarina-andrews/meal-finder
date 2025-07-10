@@ -1,12 +1,15 @@
-# meal-finder app
+# Meal Finder App
 
-This app will have a button to generate a random meal and (maybe) an x number of search parameters in order to find meals as well.
+This app uses [The Meal DB API](https://www.themealdb.com/api.php) to help users discover recipes.\
+View the live demo: [GitHub Pages](https://katarina-andrews.github.io/meal-finder/)
 
-- [The Meal DB API](https://www.themealdb.com/api.php)
+## Features
+- **Random Button** - displays a random meal
+- **Search by Meal Name** - search by full or partial name
+- **Pagination** - shows 3 meals per page
+- **Async Fetching** - async/await for API calls
 
-- [GitHub Page link](https://katarina-andrews.github.io/meal-finder/)
-
-- [Project Board](https://github.com/users/katarina-andrews/projects/1)
-
-## Postman
-![postman screenshot](Postman.png)
+## Technologies used
+- HTML
+- Tailwind CSS
+- JavaScript
