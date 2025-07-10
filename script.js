@@ -50,7 +50,7 @@ async function fetchName(name) {
 function renderMealDetails(mealsData) {
   recipeContainer.innerHTML = "";
 
-  console.log(mealsData);
+ //optional chaining avoids crashing by returning undefined if the object is null
   mealsData?.forEach((meals) => {
     const mealElm = document.createElement("div");
     mealElm.className = "text-center p-3";
@@ -142,9 +142,9 @@ const pagination = () => {
   nextBtn.className =
     "p-1 text-white bg-amber-500 hover:cursor-pointer hover:bg-amber-400";
 
-  const startingIndex = (state.currentPage - 1) * state.mealsPerPage;
-  const endingIndex = state.currentPage * state.mealsPerPage;
-  const showMeals = state.currentMeals?.slice(startingIndex, endingIndex);
+  const startingIndex = (state.currentPage - 1) * state.mealsPerPage; //so page 1 starts at 0 index
+  const endingIndex = state.currentPage * state.mealsPerPage; //so page 1 ends at index 3
+  const showMeals = state.currentMeals?.slice(startingIndex, endingIndex); //so page 1 slice(0,3) not including 3 (0 1 2 index)
 
   renderMealDetails(showMeals);
 
@@ -192,12 +192,10 @@ randomBtn.addEventListener("click", async () => {
 
 nameSearchBtn.addEventListener("click", async (event) => {
   event.preventDefault();
-  console.log("button clicked");
   const userInput = document.getElementById("search-name").value;
   const data = await fetchName(userInput);
   renderMealDetails(data.meals);
 
-  //figure out how to display error message if input is not an actual name "TypeError: Cannot read properties of null (reading 'forEach')"
   if (!userInput) {
     recipeContainer.innerHTML = "Please enter a valid name.";
     return;
