@@ -50,15 +50,8 @@ async function fetchName(name) {
 function renderMealDetails(mealsData) {
   recipeContainer.innerHTML = "";
 
-  // if (state.currentMeals === 0) {
-  //   const noDataElm = document.createElement("p");
-  //   noDataElm.innerText = "No meals found.";
-  //   // noDataElm.className = "font-bold";
-  //   recipeContainer.appendChild(noDataElm);
-  //   return;
-  // }
-
-  mealsData.forEach((meals) => {
+  console.log(mealsData);
+  mealsData?.forEach((meals) => {
     const mealElm = document.createElement("div");
     mealElm.className = "text-center p-3";
 
@@ -151,12 +144,12 @@ const pagination = () => {
 
   const startingIndex = (state.currentPage - 1) * state.mealsPerPage;
   const endingIndex = state.currentPage * state.mealsPerPage;
-  const showMeals = state.currentMeals.slice(startingIndex, endingIndex);
+  const showMeals = state.currentMeals?.slice(startingIndex, endingIndex);
 
   renderMealDetails(showMeals);
 
   prevBtn.disabled = state.currentPage === 1;
-  nextBtn.disabled = endingIndex > state.currentMeals.length;
+  nextBtn.disabled = endingIndex > state.currentMeals?.length;
 
   nextBtn.onclick = async () => {
     if (endingIndex < state.currentMeals.length) {
@@ -172,9 +165,15 @@ const pagination = () => {
     }
   };
 
-  const totalPages = Math.ceil(state.currentMeals.length / state.mealsPerPage);
+  const totalPages = Math.ceil(state.currentMeals?.length / state.mealsPerPage);
   const pageCountElem = document.createElement("p");
-  pageCountElem.innerHTML = `Page ${state.currentPage} of ${totalPages}`;
+
+  if (isNaN(totalPages)) {
+    pageCountElem.innerHTML = "No Meals Found";
+  } else {
+    pageCountElem.innerHTML = `Page ${state.currentPage} of ${totalPages}`;
+  }
+
   pageCountElem.className = "text-center font-bold pt-2";
   paginationContainer.appendChild(pageCountElem);
 
@@ -199,7 +198,7 @@ nameSearchBtn.addEventListener("click", async (event) => {
   renderMealDetails(data.meals);
 
   //figure out how to display error message if input is not an actual name "TypeError: Cannot read properties of null (reading 'forEach')"
-  if (!userInput)  {
+  if (!userInput) {
     recipeContainer.innerHTML = "Please enter a valid name.";
     return;
   }
